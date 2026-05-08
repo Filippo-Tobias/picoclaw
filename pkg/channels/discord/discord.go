@@ -119,6 +119,10 @@ func (c *DiscordChannel) Start(ctx context.Context) error {
 
 	go c.listenVoiceControl(c.ctx)
 
+	c.session.Identify.Presence = discordgo.GatewayStatusUpdate{
+		Status: "online",
+	}
+
 	if err := c.session.Open(); err != nil {
 		return fmt.Errorf("failed to open discord session: %w", err)
 	}
