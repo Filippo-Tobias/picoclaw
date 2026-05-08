@@ -123,6 +123,11 @@ func (c *DiscordChannel) Start(ctx context.Context) error {
 		return fmt.Errorf("failed to open discord session: %w", err)
 	}
 
+
+	if err := c.session.UpdateGameStatus(0, ""); err != nil {
+		logger.WarnCF("discord", "Failed to set online status", map[string]any{"error": err.Error()})
+	}
+
 	c.SetRunning(true)
 
 	logger.InfoCF("discord", "Discord bot connected", map[string]any{
